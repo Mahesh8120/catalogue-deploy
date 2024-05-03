@@ -1,10 +1,10 @@
 pipeline {
     agent {
        node {
-           label 'AGENT'
+           label 'AGENT-1'
         }
         
-}
+    }
     //  environment { 
     //     packageVersion = ''
     //     nexusURL =  "172.31.95.33:8081"
@@ -12,13 +12,12 @@ pipeline {
      options {
         timeout(time: 1, unit: 'HOURS')
         disableConcurrentBuilds() 
-     }
-     parameters {
+    }
+    parameters {
         string(name: 'version', defaultValue: '1.2.0', description: 'What is artifact version?')
         string(name: 'environment', defaultValue: 'dev', description: 'What is the encironment?')
 
     }
-
     stages {
         stage('print version') {
             steps {
@@ -26,8 +25,6 @@ pipeline {
                    echo "version: ${params.version}"
                    echo "environment: ${params.environment}"
                 """
-                    
-                
             }
         }
         stage('terraform init') { 
@@ -72,7 +69,6 @@ pipeline {
                 """
             }
         }
-        
     }        
     post { 
         always { 
